@@ -58,6 +58,12 @@ func Init() error {
 	return nil
 }
 
+// RepoExists determines if there is an existing repository at the root dir
+// set in the program's configuration file.
+func RepoExists() (bool, error) {
+	return exists("")
+}
+
 func getRootDir() string {
 	rootDir := config.Query("zet", ".root")
 
@@ -78,7 +84,6 @@ func getZetPath(id string) string {
 
 func Exists(id string) (bool, error) {
 	filename := getZetPath(id)
-	fmt.Println(filename)
 	if _, err := os.Stat(filename); err != nil {
 		// If there was an error, check if it's a file doesn't exist error
 		if os.IsNotExist(err) {
@@ -117,6 +122,34 @@ func New(id string) error {
 	cmd.Dir = filename
 
 	if err := cmd.Run(); err != nil {
+		return err
+	}
+
+	rootDir := getRootDir()
+
+	// Add the file to git staging
+	buf := new(bytes.Buffer)
+	stderr := new(bytes.Buffer)
+	cmd = exec.Command("git", "add", id)
+	cmd.Stdout = buf
+	cmd.Stderr = stderr
+	cmd.Dir = rootDir
+
+	if err := cmd.Run(); err != nil {
+		log.Print(stderr)
+		return err
+	}
+
+	// Commit the file to Git history
+	buf = new(bytes.Buffer)
+	stderr = new(bytes.Buffer)
+	cmd = exec.Command("git", "commit", "-m", fmt.Sprintf(`add zet %v`, id))
+	cmd.Stdout = buf
+	cmd.Stderr = stderr
+	cmd.Dir = rootDir
+
+	if err := cmd.Run(); err != nil {
+		log.Print(stderr)
 		return err
 	}
 
