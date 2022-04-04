@@ -2,6 +2,24 @@
 
 A Zettelkasten management CLI, because I procrastinate
 
+## Building
+
+There is a bundled Makefile you can use:
+
+```shell
+make
+```
+
+And to install the utilities, use the `install` target.
+
+```shell
+# local install
+make install PREFIX=$HOME/.local/bin
+
+# global install
+sudo make install
+```
+
 ## Usage
 
 First, initialize a Zettelkasten (configurable)
