@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strconv"
 
 	config "github.com/rwxrob/config/pkg"
 )
@@ -154,4 +155,33 @@ func New(id string) error {
 	}
 
 	return nil
+}
+
+// List returns a list of dates representing Zettelkasten entries
+func List() ([]string, error) {
+	times := make([]string, 0)
+	items, err := os.ReadDir(getRootDir())
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(items); i++ {
+		item := items[i]
+		if !item.Type().IsDir() {
+			// If the item is not a directory, ignore it
+			continue
+		}
+		if len(item.Name()) != 14 {
+			// Zettelkasten entries must be 14 characters long
+			continue
+		}
+		if _, err := strconv.ParseFloat(item.Name(), 64); err != nil {
+			// If the folder isn't numeric, don't parse it as a Zettelkasten
+			continue
+		}
+
+		times = append(times, item.Name())
+	}
+
+	return times, nil
 }

@@ -18,5 +18,5 @@ var Cmd = &Z.Cmd{
 
 	MinArgs: 1,
 
-	Commands: []*Z.Cmd{_init, new, help.Cmd, config.Cmd},
+	Commands: []*Z.Cmd{_init, new, list, help.Cmd, config.Cmd},
 }
