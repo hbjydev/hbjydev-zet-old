@@ -1,8 +1,8 @@
 package zet
 
 import (
-	Z "github.com/rwxrob/bonzai"
-	"github.com/rwxrob/bonzai/inc/help"
+	"github.com/rwxrob/bonzai/help"
+	Z "github.com/rwxrob/bonzai/z"
 	"github.com/rwxrob/config"
 )
 
