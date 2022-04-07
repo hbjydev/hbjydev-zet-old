@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/hbjydev/zet/pkg/repo"
-	Z "github.com/rwxrob/bonzai"
+	Z "github.com/rwxrob/bonzai/z"
 )
 
 var new = &Z.Cmd{

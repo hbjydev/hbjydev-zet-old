@@ -2,7 +2,7 @@ package zet
 
 import (
 	"github.com/hbjydev/zet/pkg/repo"
-	Z "github.com/rwxrob/bonzai"
+	Z "github.com/rwxrob/bonzai/z"
 )
 
 var _init = &Z.Cmd{
