@@ -8,7 +8,7 @@ import (
 
 var Cmd = &Z.Cmd{
 	Name:    `zet`,
-	Version: `v0.0.1`,
+	Version: `v0.0.3`,
 	Summary: `manages a zettelkasten`,
 
 	Usage: `[init|new|view|edit|list|help|config]`,
